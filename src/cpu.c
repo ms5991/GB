@@ -16,9 +16,6 @@ void initCpu(cpu_t* cpu)
     cpu->reg_L = 0;
 }
 
-
-typedef uint8_t (*result_flag_calc_t)(uint8_t result, uint8_t op1, uint8_t op2, alu_op_t aluOp);
-
 uint8_t isZero(
     uint8_t result, 
     uint8_t op1, 
@@ -57,9 +54,12 @@ uint8_t isHalfCarry(
     switch (alu_operation)
     {
         case ALU_ADD:
+        case ALU_INC:
             return (((op1 & 0xf) + (op2 & 0xf)) & 0x10) == 0x10;
         case ALU_SUB:
-            return (((result & 0xF) - (op1 & 0xF)) < 0);
+        case ALU_DEC:
+            // half carry occurs during subtraction if the lower 4 bits of the result are 1111
+            return (result & 0xf) == 0xf;
         default:
             return 0;
     }
@@ -124,79 +124,70 @@ void calculateAndSetAllFlags(
     calculateAndSetFlag(cpu, flag_C, cFlagCarryOp, &isCarry, *result, op1, op2, aluOp);
 }
 
-void performEightBitAddition(
+void executeEightBitALUOp(
     cpu_t* cpu,
-    uint8_t* result, 
-    uint8_t op1, 
-    uint8_t op2, 
-    flag_operation_t zFlagZeroOp,
-    flag_operation_t nFlagSubOp,
-    flag_operation_t hFlagHalfCarryOp,
-    flag_operation_t cFlagCarryOp)
-{
-    // set the result
-    *result = op1 + op2;
-
-    // calculate and set the flags
-    calculateAndSetAllFlags(cpu, result, op1, op2, zFlagZeroOp, nFlagSubOp, hFlagHalfCarryOp, cFlagCarryOp, ALU_ADD);
-}
-
-void performEightBitSubtraction(
-    cpu_t* cpu,
-    uint8_t* result,
+    uint8_t* resultReg,
     uint8_t op1,
     uint8_t op2,
-    flag_operation_t zFlagZeroOp,
-    flag_operation_t nFlagSubOp,
-    flag_operation_t hFlagHalfCarryOp,
-    flag_operation_t cFlagCarryOp)
+    alu_op_t operation)
 {
-    *result = op1 - op2;
+    flag_operation_t zFlagZeroOp = OP_FLAG_NO_OP;
+    flag_operation_t nFlagSubOp = OP_FLAG_NO_OP;
+    flag_operation_t hFlagHalfCarryOp = OP_FLAG_NO_OP;
+    flag_operation_t cFlagCarryOp = OP_FLAG_NO_OP;
+    switch (operation)
+    {
+        case ALU_INC:
 
-    // calculate and set the flags
-    calculateAndSetAllFlags(cpu, result, op1, op2, zFlagZeroOp, nFlagSubOp, hFlagHalfCarryOp, cFlagCarryOp, ALU_SUB);
+            // perform the operation
+            *resultReg = op1 + op2;
+
+            zFlagZeroOp = OP_FLAG_PER_RESULT;
+            nFlagSubOp = OP_FLAG_SET_OFF;
+            hFlagHalfCarryOp = OP_FLAG_PER_RESULT;
+
+            break;
+        case ALU_DEC:
+
+            *resultReg = op1 - op2;
+
+            zFlagZeroOp = OP_FLAG_PER_RESULT;
+            nFlagSubOp = OP_FLAG_SET_ON;
+            hFlagHalfCarryOp = OP_FLAG_PER_RESULT;
+            break;
+        case ALU_ADD:
+            // perform the operation
+            *resultReg = op1 + op2;
+
+            zFlagZeroOp = OP_FLAG_PER_RESULT;
+            nFlagSubOp = OP_FLAG_SET_OFF;
+            hFlagHalfCarryOp = OP_FLAG_PER_RESULT;
+            cFlagCarryOp = OP_FLAG_PER_RESULT;
+
+            break;
+        case ALU_SUB:
+
+            *resultReg = op1 - op2;
+
+            zFlagZeroOp = OP_FLAG_PER_RESULT;
+            nFlagSubOp = OP_FLAG_SET_ON;
+            hFlagHalfCarryOp = OP_FLAG_PER_RESULT;
+            cFlagCarryOp = OP_FLAG_PER_RESULT;
+
+            break;
+        case ALU_AND:
+
+            break;
+        case ALU_OR:
+
+            break;
+        case ALU_XOR:
+        
+            break;
+    }
+
+    calculateAndSetAllFlags(cpu, resultReg, op1, op2, zFlagZeroOp, nFlagSubOp, hFlagHalfCarryOp, cFlagCarryOp, operation);
 }
-
-
-void incrementEightBitReg(
-    cpu_t* cpu,
-    uint8_t* reg,
-    uint8_t currentRegVal)
-{
-    // increment is adding 1 to current value.
-    // all increments affect flags Z, N, and H
-    performEightBitAddition(cpu, reg, currentRegVal, 1, OP_FLAG_PER_RESULT, OP_FLAG_SET_OFF, OP_FLAG_PER_RESULT, OP_FLAG_NO_OP);
-}
-
-void decrementEightBitReg(
-    cpu_t* cpu,
-    uint8_t* reg,
-    uint8_t currentRegVal)
-{
-    // decrement is subtracting 1 from current value.
-    // all decrements affect flags Z, N, and H
-    performEightBitSubtraction(cpu, reg, currentRegVal, 1, OP_FLAG_PER_RESULT, OP_FLAG_SET_ON, OP_FLAG_PER_RESULT, OP_FLAG_NO_OP);
-}
-
-void addEightBitRegisters(
-    cpu_t* cpu,
-    uint8_t* resultReg,
-    uint8_t reg1,
-    uint8_t reg2)
-{
-    performEightBitAddition(cpu, resultReg, reg1, reg2, OP_FLAG_PER_RESULT, OP_FLAG_SET_OFF, OP_FLAG_PER_RESULT, OP_FLAG_PER_RESULT);
-}
-
-void subtractEightBitRegisters(
-    cpu_t* cpu,
-    uint8_t* resultReg,
-    uint8_t reg1,
-    uint8_t reg2)
-{
-    performEightBitSubtraction(cpu, resultReg, reg1, reg2, OP_FLAG_PER_RESULT, OP_FLAG_SET_ON, OP_FLAG_PER_RESULT, OP_FLAG_PER_RESULT);
-}
-
-
 
 void executeOpcode(uint8_t opcode, cpu_t* cpu, mem_t* mem)
 {

@@ -10,27 +10,13 @@ void setFlag(cpu_t* cpu, flags_t flag, flag_value_t value);
 
 void executeOpcode(uint8_t opcode, cpu_t* cpu, mem_t* mem);
 
-void incrementEightBitReg(
-    cpu_t* cpu,
-    uint8_t* reg,
-    uint8_t currentRegVal);
-
-void decrementEightBitReg(
-    cpu_t* cpu,
-    uint8_t* reg,
-    uint8_t currentRegVal);
-
-void addEightBitRegisters(
+void executeEightBitALUOp(
     cpu_t* cpu,
     uint8_t* resultReg,
-    uint8_t reg1,
-    uint8_t reg2);
-
-void subtractEightBitRegisters(
-    cpu_t* cpu,
-    uint8_t* resultReg,
-    uint8_t reg1,
-    uint8_t reg2);
+    uint8_t op1,
+    uint8_t op2,
+    alu_op_t operation
+);
 
 
 void printFlags(cpu_t* cpu);

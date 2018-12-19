@@ -35,14 +35,14 @@ void INC_BC(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=H,C=-
 void INC_B(cpu_t* cpu, mem_t* mem)
 {
-    incrementEightBitReg(cpu, &cpu->reg_B, cpu->reg_B);
+    executeEightBitALUOp(cpu, &cpu->reg_B, cpu->reg_B, 1, ALU_INC);
 }
 
 // cycles=4,addr=0x5,length=1
 // flags:Z=Z,N=1,H=H,C=-
 void DEC_B(cpu_t* cpu, mem_t* mem)
 {
-    decrementEightBitReg(cpu, &cpu->reg_B, cpu->reg_B);
+    executeEightBitALUOp(cpu, &cpu->reg_B, cpu->reg_B, 1, ALU_DEC);
 }
 
 // cycles=8,addr=0x6,length=2
@@ -85,14 +85,14 @@ void DEC_BC(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=H,C=-
 void INC_C(cpu_t* cpu, mem_t* mem)
 {
-    incrementEightBitReg(cpu, &cpu->reg_C, cpu->reg_C);
+    executeEightBitALUOp(cpu, &cpu->reg_C, cpu->reg_C, 1, ALU_INC);
 }
 
 // cycles=4,addr=0xd,length=1
 // flags:Z=Z,N=1,H=H,C=-
 void DEC_C(cpu_t* cpu, mem_t* mem)
 {
-    decrementEightBitReg(cpu, &cpu->reg_B, cpu->reg_B);
+    executeEightBitALUOp(cpu, &cpu->reg_B, cpu->reg_B, 1, ALU_DEC);
 }
 
 // cycles=8,addr=0xe,length=2
@@ -135,14 +135,14 @@ void INC_DE(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=H,C=-
 void INC_D(cpu_t* cpu, mem_t* mem)
 {
-    incrementEightBitReg(cpu, &cpu->reg_D, cpu->reg_D);
+    executeEightBitALUOp(cpu, &cpu->reg_D, cpu->reg_D, 1, ALU_INC);
 }
 
 // cycles=4,addr=0x15,length=1
 // flags:Z=Z,N=1,H=H,C=-
 void DEC_D(cpu_t* cpu, mem_t* mem)
 {
-    decrementEightBitReg(cpu, &cpu->reg_D, cpu->reg_D);
+    executeEightBitALUOp(cpu, &cpu->reg_D, cpu->reg_D, 1, ALU_DEC);
 }
 
 // cycles=8,addr=0x16,length=2
@@ -185,14 +185,14 @@ void DEC_DE(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=H,C=-
 void INC_E(cpu_t* cpu, mem_t* mem)
 {
-    incrementEightBitReg(cpu, &cpu->reg_E, cpu->reg_E);
+    executeEightBitALUOp(cpu, &cpu->reg_E, cpu->reg_E, 1, ALU_INC);
 }
 
 // cycles=4,addr=0x1d,length=1
 // flags:Z=Z,N=1,H=H,C=-
 void DEC_E(cpu_t* cpu, mem_t* mem)
 {
-    decrementEightBitReg(cpu, &cpu->reg_E, cpu->reg_E);
+    executeEightBitALUOp(cpu, &cpu->reg_E, cpu->reg_E, 1, ALU_DEC);
 }
 
 // cycles=8,addr=0x1e,length=2
@@ -235,14 +235,14 @@ void INC_HL(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=H,C=-
 void INC_H(cpu_t* cpu, mem_t* mem)
 {
-    incrementEightBitReg(cpu, &cpu->reg_H, cpu->reg_H);
+    executeEightBitALUOp(cpu, &cpu->reg_H, cpu->reg_H, 1, ALU_INC);
 }
 
 // cycles=4,addr=0x25,length=1
 // flags:Z=Z,N=1,H=H,C=-
 void DEC_H(cpu_t* cpu, mem_t* mem)
 {
-    decrementEightBitReg(cpu, &cpu->reg_H, cpu->reg_H);
+    executeEightBitALUOp(cpu, &cpu->reg_H, cpu->reg_H, 1, ALU_DEC);
 }
 
 // cycles=8,addr=0x26,length=2
@@ -285,14 +285,14 @@ void DEC_HL(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=H,C=-
 void INC_L(cpu_t* cpu, mem_t* mem)
 {
-    incrementEightBitReg(cpu, &cpu->reg_L, cpu->reg_L);
+    executeEightBitALUOp(cpu, &cpu->reg_L, cpu->reg_L, 1, ALU_INC);
 }
 
 // cycles=4,addr=0x2d,length=1
 // flags:Z=Z,N=1,H=H,C=-
 void DEC_L(cpu_t* cpu, mem_t* mem)
 {
-    decrementEightBitReg(cpu, &cpu->reg_L, cpu->reg_L);
+    executeEightBitALUOp(cpu, &cpu->reg_L, cpu->reg_L, 1, ALU_DEC);
 }
 
 // cycles=8,addr=0x2e,length=2
@@ -383,14 +383,14 @@ void DEC_SP(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=H,C=-
 void INC_A(cpu_t* cpu, mem_t* mem)
 {
-    incrementEightBitReg(cpu, &cpu->reg_A, cpu->reg_A);
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, 1, ALU_INC);
 }
 
 // cycles=4,addr=0x3d,length=1
 // flags:Z=Z,N=1,H=H,C=-
 void DEC_A(cpu_t* cpu, mem_t* mem)
 {
-    decrementEightBitReg(cpu, &cpu->reg_A, cpu->reg_A);
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, 1, ALU_DEC);
 }
 
 // cycles=8,addr=0x3e,length=2
@@ -793,42 +793,42 @@ void LD_A_A(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=H,C=C
 void ADD_A_B(cpu_t* cpu, mem_t* mem)
 {
-    addEightBitRegisters(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_B);
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_B, ALU_ADD);
 }
 
 // cycles=4,addr=0x81,length=1
 // flags:Z=Z,N=0,H=H,C=C
 void ADD_A_C(cpu_t* cpu, mem_t* mem)
 {
-    addEightBitRegisters(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_C);
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_C, ALU_ADD);
 }
 
 // cycles=4,addr=0x82,length=1
 // flags:Z=Z,N=0,H=H,C=C
 void ADD_A_D(cpu_t* cpu, mem_t* mem)
 {
-    addEightBitRegisters(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_D);
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_D, ALU_ADD);
 }
 
 // cycles=4,addr=0x83,length=1
 // flags:Z=Z,N=0,H=H,C=C
 void ADD_A_E(cpu_t* cpu, mem_t* mem)
 {
-    addEightBitRegisters(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_E);
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_E, ALU_ADD);
 }
 
 // cycles=4,addr=0x84,length=1
 // flags:Z=Z,N=0,H=H,C=C
 void ADD_A_H(cpu_t* cpu, mem_t* mem)
 {
-    addEightBitRegisters(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_H);
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_H, ALU_ADD);
 }
 
 // cycles=4,addr=0x85,length=1
 // flags:Z=Z,N=0,H=H,C=C
 void ADD_A_L(cpu_t* cpu, mem_t* mem)
 {
-    addEightBitRegisters(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_L);
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_L, ALU_ADD);
 }
 
 // cycles=8,addr=0x86,length=1
@@ -841,14 +841,13 @@ void ADD_A__OP_HL_CP_(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=H,C=C
 void ADD_A_A(cpu_t* cpu, mem_t* mem)
 {
-    addEightBitRegisters(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_A);
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_A, ALU_ADD);
 }
 
 // cycles=4,addr=0x88,length=1
 // flags:Z=Z,N=0,H=H,C=C
 void ADC_A_B(cpu_t* cpu, mem_t* mem)
 {
-    addEightBitRegisters(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_B);
 }
 
 // cycles=4,addr=0x89,length=1
@@ -897,42 +896,42 @@ void ADC_A_A(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=1,H=H,C=C
 void SUB_B(cpu_t* cpu, mem_t* mem)
 {
-    subtractEightBitRegisters(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_B);
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_B, ALU_SUB);
 }
 
 // cycles=4,addr=0x91,length=1
 // flags:Z=Z,N=1,H=H,C=C
 void SUB_C(cpu_t* cpu, mem_t* mem)
 {
-    subtractEightBitRegisters(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_C);
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_C, ALU_SUB);
 }
 
 // cycles=4,addr=0x92,length=1
 // flags:Z=Z,N=1,H=H,C=C
 void SUB_D(cpu_t* cpu, mem_t* mem)
 {
-    subtractEightBitRegisters(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_D);
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_D, ALU_SUB);
 }
 
 // cycles=4,addr=0x93,length=1
 // flags:Z=Z,N=1,H=H,C=C
 void SUB_E(cpu_t* cpu, mem_t* mem)
 {
-    subtractEightBitRegisters(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_E);
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_E, ALU_SUB);
 }
 
 // cycles=4,addr=0x94,length=1
 // flags:Z=Z,N=1,H=H,C=C
 void SUB_H(cpu_t* cpu, mem_t* mem)
 {
-    subtractEightBitRegisters(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_H);
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_H, ALU_SUB);
 }
 
 // cycles=4,addr=0x95,length=1
 // flags:Z=Z,N=1,H=H,C=C
 void SUB_L(cpu_t* cpu, mem_t* mem)
 {
-    subtractEightBitRegisters(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_L);
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_L, ALU_SUB);
 }
 
 // cycles=8,addr=0x96,length=1
@@ -945,7 +944,7 @@ void SUB__OP_HL_CP_(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=1,H=H,C=C
 void SUB_A(cpu_t* cpu, mem_t* mem)
 {
-    subtractEightBitRegisters(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_A);
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_A, ALU_SUB);
 }
 
 // cycles=4,addr=0x98,length=1
