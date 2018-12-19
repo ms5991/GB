@@ -4,19 +4,40 @@
 #include <stdint.h>
 
 #define RAM_SIZE 65536
+#define TRUE 1
+#define FALSE 0
 
 typedef enum
 {
-    NOT_SET = 0,
-    SET = 1
-} flagValue_t;
+    ALU_ADD,
+    ALU_SUB,
+    ALU_AND,
+    ALU_OR,
+    ALU_XOR
+} alu_op_t;
+
+typedef enum
+{
+    FLAG_SET,
+    FLAG_NOT_SET
+} flag_value_t;
+
+
+typedef enum
+{
+    OP_FLAG_SET_OFF,
+    OP_FLAG_SET_ON,
+    OP_FLAG_TOGGLE,
+    OP_FLAG_PER_RESULT,
+    OP_FLAG_NO_OP
+} flag_operation_t;
 
 typedef enum 
 {
-    flag_Z = 1 << 7,
-    flag_N = 1 << 6,
-    flag_H = 1 << 5,
-    flag_C = 1 << 4
+    flag_Z = 1 << 7, // zero
+    flag_N = 1 << 6, // subtraction
+    flag_H = 1 << 5, // half carry
+    flag_C = 1 << 4  // carry
 } flags_t;
 
 
