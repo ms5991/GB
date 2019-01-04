@@ -178,11 +178,32 @@ void executeEightBitALUOp(
             break;
         case ALU_AND:
 
+            *resultReg = op1 & op2;
+
+            zFlagZeroOp = OP_FLAG_PER_RESULT;
+            nFlagSubOp = OP_FLAG_SET_OFF;
+            hFlagHalfCarryOp = OP_FLAG_SET_ON;
+            cFlagCarryOp = OP_FLAG_SET_OFF;
+
             break;
         case ALU_OR:
 
+            *resultReg = op1 | op2;
+
+            zFlagZeroOp = OP_FLAG_PER_RESULT;
+            nFlagSubOp = OP_FLAG_SET_OFF;
+            hFlagHalfCarryOp = OP_FLAG_SET_OFF;
+            cFlagCarryOp = OP_FLAG_SET_OFF;
+
             break;
         case ALU_XOR:
+
+            *resultReg = op1 ^ op2;
+
+            zFlagZeroOp = OP_FLAG_PER_RESULT;
+            nFlagSubOp = OP_FLAG_SET_OFF;
+            hFlagHalfCarryOp = OP_FLAG_SET_OFF;
+            cFlagCarryOp = OP_FLAG_SET_OFF;
         
             break;
     }

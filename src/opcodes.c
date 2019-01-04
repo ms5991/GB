@@ -999,36 +999,42 @@ void SBC_A_A(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=1,C=0
 void AND_B(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_B, ALU_AND);
 }
 
 // cycles=4,addr=0xa1,length=1
 // flags:Z=Z,N=0,H=1,C=0
 void AND_C(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_C, ALU_AND);
 }
 
 // cycles=4,addr=0xa2,length=1
 // flags:Z=Z,N=0,H=1,C=0
 void AND_D(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_D, ALU_AND);
 }
 
 // cycles=4,addr=0xa3,length=1
 // flags:Z=Z,N=0,H=1,C=0
 void AND_E(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_E, ALU_AND);
 }
 
 // cycles=4,addr=0xa4,length=1
 // flags:Z=Z,N=0,H=1,C=0
 void AND_H(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_H, ALU_AND);
 }
 
 // cycles=4,addr=0xa5,length=1
 // flags:Z=Z,N=0,H=1,C=0
 void AND_L(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_L, ALU_AND);
 }
 
 // cycles=8,addr=0xa6,length=1
@@ -1041,42 +1047,49 @@ void AND__OP_HL_CP_(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=1,C=0
 void AND_A(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_A, ALU_AND);
 }
 
 // cycles=4,addr=0xa8,length=1
 // flags:Z=Z,N=0,H=0,C=0
 void XOR_B(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_B, ALU_XOR);
 }
 
 // cycles=4,addr=0xa9,length=1
 // flags:Z=Z,N=0,H=0,C=0
 void XOR_C(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_C, ALU_XOR);
 }
 
 // cycles=4,addr=0xaa,length=1
 // flags:Z=Z,N=0,H=0,C=0
 void XOR_D(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_D, ALU_XOR);
 }
 
 // cycles=4,addr=0xab,length=1
 // flags:Z=Z,N=0,H=0,C=0
 void XOR_E(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_E, ALU_XOR);
 }
 
 // cycles=4,addr=0xac,length=1
 // flags:Z=Z,N=0,H=0,C=0
 void XOR_H(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_H, ALU_XOR);
 }
 
 // cycles=4,addr=0xad,length=1
 // flags:Z=Z,N=0,H=0,C=0
 void XOR_L(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_L, ALU_XOR);
 }
 
 // cycles=8,addr=0xae,length=1
@@ -1089,42 +1102,49 @@ void XOR__OP_HL_CP_(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=0,C=0
 void XOR_A(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_A, ALU_XOR);
 }
 
 // cycles=4,addr=0xb0,length=1
 // flags:Z=Z,N=0,H=0,C=0
 void OR_B(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_B, ALU_OR);
 }
 
 // cycles=4,addr=0xb1,length=1
 // flags:Z=Z,N=0,H=0,C=0
 void OR_C(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_C, ALU_OR);
 }
 
 // cycles=4,addr=0xb2,length=1
 // flags:Z=Z,N=0,H=0,C=0
 void OR_D(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_D, ALU_OR);
 }
 
 // cycles=4,addr=0xb3,length=1
 // flags:Z=Z,N=0,H=0,C=0
 void OR_E(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_E, ALU_OR);
 }
 
 // cycles=4,addr=0xb4,length=1
 // flags:Z=Z,N=0,H=0,C=0
 void OR_H(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_H, ALU_OR);
 }
 
 // cycles=4,addr=0xb5,length=1
 // flags:Z=Z,N=0,H=0,C=0
 void OR_L(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_L, ALU_OR);
 }
 
 // cycles=8,addr=0xb6,length=1
@@ -1137,6 +1157,7 @@ void OR__OP_HL_CP_(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=0,C=0
 void OR_A(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_A, ALU_OR);
 }
 
 // cycles=4,addr=0xb8,length=1
