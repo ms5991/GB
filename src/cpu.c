@@ -26,6 +26,7 @@ uint8_t isZero(
     return result == 0;
 }
 
+
 uint8_t isCarry(
     uint8_t result, 
     uint8_t op1,
