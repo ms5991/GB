@@ -9,14 +9,42 @@ typedef struct
 {
     uint16_t reg_PC;
     uint16_t reg_SP;
-    uint8_t reg_A;
-    uint8_t reg_F;
-    uint8_t reg_B;
-    uint8_t reg_C;
-    uint8_t reg_D;
-    uint8_t reg_E;
-    uint8_t reg_H;
-    uint8_t reg_L;
+    union 
+    {
+        struct
+        {
+            uint8_t reg_A;
+            uint8_t reg_F;
+        };
+        uint16_t reg_AF;
+    };
+    union 
+    {
+        struct
+        {
+            uint8_t reg_B;
+            uint8_t reg_C;
+        };
+        uint16_t reg_BC;
+    };
+    union 
+    {
+        struct
+        {
+            uint8_t reg_D;
+            uint8_t reg_E;
+        };
+        uint16_t reg_DE;
+    };
+    union 
+    {
+        struct
+        {
+            uint8_t reg_H;
+            uint8_t reg_L;
+        };
+        uint16_t reg_HL;
+    };
 } cpu_t;
 
 typedef enum
