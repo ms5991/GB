@@ -233,7 +233,307 @@ void testEightBitAddFromNonZeroToNonZeroWithFullCarry()
     assert(cpu.reg_B == toAdd);
 
     // Z (zero), N (sub) H (half carry) C (carry)
-    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_NOT_SET, FLAG_NOT_SET, FLAG_SET);
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_NOT_SET, FLAG_SET, FLAG_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitSubFromNonZeroToZero()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x0F;
+    uint8_t toSub = 0x0F;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_SUB);
+
+    uint8_t correctValue = (initialValue - toSub);
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_SET, FLAG_SET, FLAG_NOT_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitSubFromNonZeroToNonZeroNoCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x0F;
+    uint8_t toSub = 0x0E;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_SUB);
+
+    uint8_t correctValue = (initialValue - toSub);
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_SET, FLAG_NOT_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitSubFromNonZeroToNonZeroWithHalfCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x10;
+    uint8_t toSub = 0x0E;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_SUB);
+
+    uint8_t correctValue = (initialValue - toSub);
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_SET, FLAG_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitSubFromNonZeroToNonZeroWithFullCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x10;
+    uint8_t toSub = 0xFF;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_SUB);
+
+    uint8_t correctValue = (initialValue - toSub);
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_SET, FLAG_SET, FLAG_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitAndNonZeroResult()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x10;
+    uint8_t toAnd = 0x10;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toAnd;
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_AND);
+
+    uint8_t correctValue = (initialValue & toAnd);
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toAnd);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_NOT_SET, FLAG_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitAndZeroResult()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x10;
+    uint8_t toAnd = 0x01;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toAnd;
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_AND);
+
+    uint8_t correctValue = (initialValue & toAnd);
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toAnd);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_SET, FLAG_NOT_SET, FLAG_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitAndAllOpsZero()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x0;
+    uint8_t toAnd = 0x0;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toAnd;
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_AND);
+
+    uint8_t correctValue = (initialValue & toAnd);
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toAnd);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_SET, FLAG_NOT_SET, FLAG_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitOrNonZeroResult()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x10;
+    uint8_t toOr = 0x00;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toOr;
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_OR);
+
+    uint8_t correctValue = (initialValue | toOr);
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toOr);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_NOT_SET, FLAG_NOT_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitOrZeroResult()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x00;
+    uint8_t toOr = 0x00;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toOr;
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_OR);
+
+    uint8_t correctValue = (initialValue | toOr);
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toOr);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_SET, FLAG_NOT_SET, FLAG_NOT_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitXorNonZeroResult()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x10;
+    uint8_t toXor = 0x01;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toXor;
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_XOR);
+
+    uint8_t correctValue = (initialValue ^ toXor);
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toXor);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_NOT_SET, FLAG_NOT_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitXorZeroResult()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x10;
+    uint8_t toXor = 0x10;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toXor;
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_XOR);
+
+    uint8_t correctValue = (initialValue ^ toXor);
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toXor);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_SET, FLAG_NOT_SET, FLAG_NOT_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitXorAllOpsZero()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x00;
+    uint8_t toXor = 0x00;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toXor;
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_XOR);
+
+    uint8_t correctValue = (initialValue ^ toXor);
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toXor);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_SET, FLAG_NOT_SET, FLAG_NOT_SET, FLAG_NOT_SET);
 
     printf("Test function passed: [%s]\n", __func__);
 }
@@ -251,4 +551,16 @@ void runAllEightBitALUTests()
     testEightBitAddFromNonZeroToNonZeroNoHalfCarry();
     testEightBitAddFromNonZeroToNonZeroWithHalfCarry();
     testEightBitAddFromNonZeroToNonZeroWithFullCarry();
+    testEightBitSubFromNonZeroToZero();
+    testEightBitSubFromNonZeroToNonZeroNoCarry();
+    testEightBitSubFromNonZeroToNonZeroWithHalfCarry();
+    testEightBitSubFromNonZeroToNonZeroWithFullCarry();
+    testEightBitAndNonZeroResult();
+    testEightBitAndZeroResult();
+    testEightBitAndAllOpsZero();
+    testEightBitOrNonZeroResult();
+    testEightBitOrZeroResult();
+    testEightBitXorNonZeroResult();
+    testEightBitXorZeroResult();
+    testEightBitXorAllOpsZero();
 }

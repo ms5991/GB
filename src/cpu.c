@@ -56,11 +56,10 @@ uint8_t isHalfCarry(
     {
         case ALU_ADD:
         case ALU_INC:
-            return (((op1 & 0xf) + (op2 & 0xf)) & 0x10) == 0x10;
+            return ((op1 ^ op2 ^ result) & 0x10) == 0x10;
         case ALU_SUB:
         case ALU_DEC:
-            // half carry occurs during subtraction if the lower 4 bits of the result are 1111
-            return (result & 0xf) == 0xf;
+            return ((op1 ^ op2 ^ result) & 0x10) == 0x10;
         default:
             return 0;
     }
