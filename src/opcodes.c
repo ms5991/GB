@@ -848,36 +848,42 @@ void ADD_A_A(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=H,C=C
 void ADC_A_B(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_B, ALU_ADC);
 }
 
 // cycles=4,addr=0x89,length=1
 // flags:Z=Z,N=0,H=H,C=C
 void ADC_A_C(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_C, ALU_ADC);
 }
 
 // cycles=4,addr=0x8a,length=1
 // flags:Z=Z,N=0,H=H,C=C
 void ADC_A_D(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_D, ALU_ADC);
 }
 
 // cycles=4,addr=0x8b,length=1
 // flags:Z=Z,N=0,H=H,C=C
 void ADC_A_E(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_E, ALU_ADC);
 }
 
 // cycles=4,addr=0x8c,length=1
 // flags:Z=Z,N=0,H=H,C=C
 void ADC_A_H(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_H, ALU_ADC);
 }
 
 // cycles=4,addr=0x8d,length=1
 // flags:Z=Z,N=0,H=H,C=C
 void ADC_A_L(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_L, ALU_ADC);
 }
 
 // cycles=8,addr=0x8e,length=1
@@ -890,6 +896,7 @@ void ADC_A__OP_HL_CP_(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=H,C=C
 void ADC_A_A(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_A, ALU_ADC);
 }
 
 // cycles=4,addr=0x90,length=1

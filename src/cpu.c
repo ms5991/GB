@@ -17,6 +17,7 @@ void initCpu(cpu_t* cpu)
 }
 
 uint8_t isZero(
+    cpu_t* cpu,
     uint8_t result, 
     uint8_t op1, 
     uint8_t op2, 
@@ -28,15 +29,23 @@ uint8_t isZero(
 
 
 uint8_t isCarry(
+    cpu_t* cpu,
     uint8_t result, 
     uint8_t op1,
     uint8_t op2, 
     alu_op_t alu_operation)
 {
-    // carry is different between add and sub
     switch (alu_operation)
     {
         case ALU_ADD:
+            return result < op1;
+        case ALU_ADC:
+            // if carry flag is set, account for extra 1 by using <= instead of <
+            if (getFlag(cpu, flag_C) == FLAG_SET)
+            {
+                return result <= op1;
+            }
+            // carry flag not set, so this is normal addition
             return result < op1;
         case ALU_SUB:
             return result > op1;
@@ -47,6 +56,7 @@ uint8_t isCarry(
 }
 
 uint8_t isHalfCarry(
+    cpu_t* cpu,
     uint8_t result, 
     uint8_t op1, 
     uint8_t op2, 
@@ -56,6 +66,7 @@ uint8_t isHalfCarry(
     {
         case ALU_ADD:
         case ALU_INC:
+        case ALU_ADC:
             return ((op1 ^ op2 ^ result) & 0x10) == 0x10;
         case ALU_SUB:
         case ALU_DEC:
@@ -96,7 +107,7 @@ void calculateAndSetFlag(
             break;
         // flag is set according to the result of the operation as determined by flagCalc
         case OP_FLAG_PER_RESULT:
-            toSet = flagCalc(result, op1, op2, aluOp) ? FLAG_SET : FLAG_NOT_SET;
+            toSet = flagCalc(cpu, result, op1, op2, aluOp) ? FLAG_SET : FLAG_NOT_SET;
             break;
         default:
             // included to avoid compile warning
@@ -203,6 +214,16 @@ void executeEightBitALUOp(
             nFlagSubOp = OP_FLAG_SET_OFF;
             hFlagHalfCarryOp = OP_FLAG_SET_OFF;
             cFlagCarryOp = OP_FLAG_SET_OFF;
+        
+            break;
+        case ALU_ADC:
+
+            *resultReg = op1 + op2 + (getFlag(cpu, flag_C) == FLAG_SET ? 1 : 0);
+
+            zFlagZeroOp = OP_FLAG_PER_RESULT;
+            nFlagSubOp = OP_FLAG_SET_OFF;
+            hFlagHalfCarryOp = OP_FLAG_PER_RESULT;
+            cFlagCarryOp = OP_FLAG_PER_RESULT;
         
             break;
     }

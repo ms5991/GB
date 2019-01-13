@@ -4,8 +4,20 @@
 #include <stdint.h>
 
 #define RAM_SIZE 65536
-#define TRUE 1
-#define FALSE 0
+
+typedef struct
+{
+    uint16_t reg_PC;
+    uint16_t reg_SP;
+    uint8_t reg_A;
+    uint8_t reg_F;
+    uint8_t reg_B;
+    uint8_t reg_C;
+    uint8_t reg_D;
+    uint8_t reg_E;
+    uint8_t reg_H;
+    uint8_t reg_L;
+} cpu_t;
 
 typedef enum
 {
@@ -15,10 +27,12 @@ typedef enum
     ALU_OR,
     ALU_XOR,
     ALU_INC,
-    ALU_DEC
+    ALU_DEC,
+    ALU_ADC
 } alu_op_t;
 
 typedef uint8_t (*result_flag_calc_t)(
+    cpu_t* cpu,
     uint8_t result,
     uint8_t op1,
     uint8_t op2,
@@ -47,21 +61,6 @@ typedef enum
     flag_H = 1 << 5, // half carry
     flag_C = 1 << 4  // carry
 } flags_t;
-
-
-typedef struct
-{
-    uint16_t reg_PC;
-    uint16_t reg_SP;
-    uint8_t reg_A;
-    uint8_t reg_F;
-    uint8_t reg_B;
-    uint8_t reg_C;
-    uint8_t reg_D;
-    uint8_t reg_E;
-    uint8_t reg_H;
-    uint8_t reg_L;
-} cpu_t;
 
 typedef struct 
 {
