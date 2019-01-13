@@ -155,7 +155,7 @@ void testEightBitAddFromZeroToNonZero()
 
     executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_ADD);
 
-    // added zero to nonzero
+    // added to zero
     assert(cpu.reg_A == toAdd);
 
     // make sure B is unchanged
@@ -178,7 +178,7 @@ void testEightBitAddFromNonZeroToNonZeroNoHalfCarry()
 
     executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_ADD);
 
-    // added zero to nonzero
+    // should be result of addition
     assert(cpu.reg_A == (initialValue + toAdd));
 
     // make sure B is unchanged
@@ -201,7 +201,7 @@ void testEightBitAddFromNonZeroToNonZeroWithHalfCarry()
 
     executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_ADD);
 
-    // added zero to nonzero
+    // should be result of addition
     assert(cpu.reg_A == (initialValue + toAdd));
 
     // make sure B is unchanged
@@ -226,7 +226,7 @@ void testEightBitAddFromNonZeroToNonZeroWithFullCarry()
 
     uint8_t correctValue = (initialValue + toAdd);
 
-    // added zero to nonzero
+    // should be result of addition
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -251,7 +251,7 @@ void testEightBitSubFromNonZeroToZero()
 
     uint8_t correctValue = (initialValue - toSub);
 
-    // added zero to nonzero
+    // subtracted
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -276,7 +276,6 @@ void testEightBitSubFromNonZeroToNonZeroNoCarry()
 
     uint8_t correctValue = (initialValue - toSub);
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -301,7 +300,6 @@ void testEightBitSubFromNonZeroToNonZeroWithHalfCarry()
 
     uint8_t correctValue = (initialValue - toSub);
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -326,7 +324,6 @@ void testEightBitSubFromNonZeroToNonZeroWithFullCarry()
 
     uint8_t correctValue = (initialValue - toSub);
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -351,7 +348,6 @@ void testEightBitAndNonZeroResult()
 
     uint8_t correctValue = (initialValue & toAnd);
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -376,7 +372,6 @@ void testEightBitAndZeroResult()
 
     uint8_t correctValue = (initialValue & toAnd);
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -401,7 +396,6 @@ void testEightBitAndAllOpsZero()
 
     uint8_t correctValue = (initialValue & toAnd);
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -426,7 +420,6 @@ void testEightBitOrNonZeroResult()
 
     uint8_t correctValue = (initialValue | toOr);
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -451,7 +444,6 @@ void testEightBitOrZeroResult()
 
     uint8_t correctValue = (initialValue | toOr);
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -476,7 +468,6 @@ void testEightBitXorNonZeroResult()
 
     uint8_t correctValue = (initialValue ^ toXor);
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -501,7 +492,6 @@ void testEightBitXorZeroResult()
 
     uint8_t correctValue = (initialValue ^ toXor);
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -526,7 +516,6 @@ void testEightBitXorAllOpsZero()
 
     uint8_t correctValue = (initialValue ^ toXor);
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -554,7 +543,6 @@ void testEightBitADCCarryFlagIsZeroNoCarry()
 
     uint8_t correctValue = (initialValue + toAdd + (startingFlagValue == FLAG_SET ? 1 : 0));
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -582,7 +570,6 @@ void testEightBitADCCarryFlagIsNonZeroNoCarry()
 
     uint8_t correctValue = (initialValue + toAdd + (startingFlagValue == FLAG_SET ? 1 : 0));
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -610,7 +597,6 @@ void testEightBitADCCarryFlagIsZeroWithHalfCarry()
 
     uint8_t correctValue = (initialValue + toAdd + (startingFlagValue == FLAG_SET ? 1 : 0));
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -638,7 +624,6 @@ void testEightBitADCCarryFlagIsNonZeroWithHalfCarry()
 
     uint8_t correctValue = (initialValue + toAdd + (startingFlagValue == FLAG_SET ? 1 : 0));
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -666,7 +651,6 @@ void testEightBitADCCarryFlagIsZeroWithFullCarry()
 
     uint8_t correctValue = (initialValue + toAdd + (startingFlagValue == FLAG_SET ? 1 : 0));
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -694,7 +678,6 @@ void testEightBitADCCarryFlagIsNonZeroWithFullCarry()
 
     uint8_t correctValue = (initialValue + toAdd + (startingFlagValue == FLAG_SET ? 1 : 0));
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -722,7 +705,6 @@ void testEightBitADCRegAZeroCarryFlagIsNonZeroWithFullCarry()
 
     uint8_t correctValue = (initialValue + toAdd + (startingFlagValue == FLAG_SET ? 1 : 0));
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -750,7 +732,6 @@ void testEightBitADCRegANonZeroCarryFlagIsNonZeroWithFullCarry()
 
     uint8_t correctValue = (initialValue + toAdd + (startingFlagValue == FLAG_SET ? 1 : 0));
 
-    // added zero to nonzero
     assert(cpu.reg_A == correctValue);
 
     // make sure B is unchanged
@@ -762,31 +743,308 @@ void testEightBitADCRegANonZeroCarryFlagIsNonZeroWithFullCarry()
     printf("Test function passed: [%s]\n", __func__);
 }
 
+void testEightBitSBCCarryFlagIsZeroNoCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x02;
+    uint8_t toSub = 0x01;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    flag_value_t startingFlagValue = FLAG_NOT_SET;
+    setFlag(&cpu, flag_C, startingFlagValue);
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_SBC);
+
+    uint8_t correctValue = (initialValue - toSub - (startingFlagValue == FLAG_SET ? 1 : 0));
+
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_SET, FLAG_NOT_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitSBCCarryFlagIsNonZeroNoCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x03;
+    uint8_t toSub = 0x01;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    flag_value_t startingFlagValue = FLAG_SET;
+    setFlag(&cpu, flag_C, startingFlagValue);
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_SBC);
+
+    uint8_t correctValue = (initialValue - toSub - (startingFlagValue == FLAG_SET ? 1 : 0));
+
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_SET, FLAG_NOT_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitSBCCarryFlagIsNonZeroNoCarryToZero()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x02;
+    uint8_t toSub = 0x01;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    flag_value_t startingFlagValue = FLAG_SET;
+    setFlag(&cpu, flag_C, startingFlagValue);
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_SBC);
+
+    uint8_t correctValue = (initialValue - toSub - (startingFlagValue == FLAG_SET ? 1 : 0));
+
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_SET, FLAG_SET, FLAG_NOT_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitSBCCarryFlagIsZeroWithHalfCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x10;
+    uint8_t toSub = 0x01;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    flag_value_t startingFlagValue = FLAG_NOT_SET;
+    setFlag(&cpu, flag_C, startingFlagValue);
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_SBC);
+
+    uint8_t correctValue = (initialValue - toSub - (startingFlagValue == FLAG_SET ? 1 : 0));
+
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_SET, FLAG_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitSBCCarryFlagIsNonZeroWithHalfCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x10;
+    uint8_t toSub = 0x00;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    flag_value_t startingFlagValue = FLAG_SET;
+    setFlag(&cpu, flag_C, startingFlagValue);
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_SBC);
+
+    uint8_t correctValue = (initialValue - toSub - (startingFlagValue == FLAG_SET ? 1 : 0));
+
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_SET, FLAG_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitSBCCarryFlagIsZeroWithFullCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x00;
+    uint8_t toSub = 0x01;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    flag_value_t startingFlagValue = FLAG_NOT_SET;
+    setFlag(&cpu, flag_C, startingFlagValue);
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_SBC);
+
+    uint8_t correctValue = (initialValue - toSub - (startingFlagValue == FLAG_SET ? 1 : 0));
+
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_SET, FLAG_SET, FLAG_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitSBCCarryFlagIsNonZeroWithFullCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x01;
+    uint8_t toSub = 0x01;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    flag_value_t startingFlagValue = FLAG_SET;
+    setFlag(&cpu, flag_C, startingFlagValue);
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_SBC);
+
+    uint8_t correctValue = (initialValue - toSub - (startingFlagValue == FLAG_SET ? 1 : 0));
+
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_SET, FLAG_SET, FLAG_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitSBCRegAZeroCarryFlagIsNonZeroWithFullCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x00;
+    uint8_t toSub = 0x00;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    flag_value_t startingFlagValue = FLAG_SET;
+    setFlag(&cpu, flag_C, startingFlagValue);
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_SBC);
+
+    uint8_t correctValue = (initialValue - toSub - (startingFlagValue == FLAG_SET ? 1 : 0));
+
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_SET, FLAG_SET, FLAG_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitSBCRegAMaxCarryFlagIsNonZeroWithFullCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0xFF;
+    uint8_t toSub = 0xFF;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    flag_value_t startingFlagValue = FLAG_SET;
+    setFlag(&cpu, flag_C, startingFlagValue);
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_SBC);
+
+    uint8_t correctValue = (initialValue - toSub - (startingFlagValue == FLAG_SET ? 1 : 0));
+
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_SET, FLAG_SET, FLAG_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitSBCRegANonZeroCarryFlagIsNonZeroWithFullCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x00;
+    uint8_t toSub = 0xFF;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    flag_value_t startingFlagValue = FLAG_SET;
+    setFlag(&cpu, flag_C, startingFlagValue);
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_SBC);
+
+    uint8_t correctValue = (initialValue - toSub - (startingFlagValue == FLAG_SET ? 1 : 0));
+
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_SET, FLAG_SET, FLAG_SET, FLAG_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
 void runAllEightBitALUTests()
 {
     testEightBitIncFromZero();
     testEightBitIncWithHalfCarry();
     testEightBitIncWithoutHalfCarry();
+
     testEightBitDecToZero();
     testEightBitDecWithHalfCarry();
     testEightBitDecWithoutHalfCarry();
+
     testEightBitAddFromZeroToZero();
     testEightBitAddFromZeroToNonZero();
     testEightBitAddFromNonZeroToNonZeroNoHalfCarry();
     testEightBitAddFromNonZeroToNonZeroWithHalfCarry();
     testEightBitAddFromNonZeroToNonZeroWithFullCarry();
+
     testEightBitSubFromNonZeroToZero();
     testEightBitSubFromNonZeroToNonZeroNoCarry();
     testEightBitSubFromNonZeroToNonZeroWithHalfCarry();
     testEightBitSubFromNonZeroToNonZeroWithFullCarry();
+
     testEightBitAndNonZeroResult();
     testEightBitAndZeroResult();
     testEightBitAndAllOpsZero();
+
     testEightBitOrNonZeroResult();
     testEightBitOrZeroResult();
+
     testEightBitXorNonZeroResult();
     testEightBitXorZeroResult();
     testEightBitXorAllOpsZero();
+
     testEightBitADCCarryFlagIsZeroNoCarry();
     testEightBitADCCarryFlagIsNonZeroNoCarry();
     testEightBitADCCarryFlagIsZeroWithHalfCarry();
@@ -795,4 +1053,15 @@ void runAllEightBitALUTests()
     testEightBitADCCarryFlagIsNonZeroWithFullCarry();
     testEightBitADCRegAZeroCarryFlagIsNonZeroWithFullCarry();
     testEightBitADCRegANonZeroCarryFlagIsNonZeroWithFullCarry();
+
+    testEightBitSBCCarryFlagIsZeroNoCarry();
+    testEightBitSBCCarryFlagIsNonZeroNoCarry();
+    testEightBitSBCCarryFlagIsNonZeroNoCarryToZero();
+    testEightBitSBCCarryFlagIsZeroWithHalfCarry();
+    testEightBitSBCCarryFlagIsNonZeroWithHalfCarry();
+    testEightBitSBCCarryFlagIsZeroWithFullCarry();
+    testEightBitSBCCarryFlagIsNonZeroWithFullCarry();
+    testEightBitSBCRegAZeroCarryFlagIsNonZeroWithFullCarry();
+    testEightBitSBCRegAMaxCarryFlagIsNonZeroWithFullCarry();
+    testEightBitSBCRegANonZeroCarryFlagIsNonZeroWithFullCarry();
 }
