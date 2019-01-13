@@ -64,7 +64,7 @@ OBJECTS             := $(addprefix $(OBJDIR)/,$(notdir $(SOURCES:.$(SRCEXT)=.$(O
 TEST_OBJECTS        := $(addprefix $(OBJDIR)/,$(notdir $(TEST_SOURCES:.$(SRCEXT)=.$(OBJEXT))))
 
 # compile target
-all: dirs $(TARGET)
+all: clean dirs $(TARGET)
 
 # default to all
 default: all
@@ -88,7 +88,7 @@ $(OBJDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	$(CC) $(CFLAGS) -c -o $@ $^
 
 # for test, need additional flags and objects
-$(TEST_TARGET): CFLAGS +=  -I $(TESTDIR)/$(INCDIR)
+$(TEST_TARGET): CFLAGS +=  -I $(TESTDIR)/$(INCDIR) -D_TEST
 $(TEST_TARGET): OBJECTS += $(TEST_OBJECTS)
 
 # the test program relies on the file containing main under tests/src and the objects
@@ -123,5 +123,7 @@ clean:
 	@echo "Cleaning..."
 	rm -rf $(OBJDIR)
 	rm -rf $(TARGETDIR)
+	rm -rf $(TESTDIR)/$(OBJDIR)
+	rm -rf $(TESTDIR)/$(TARGETDIR)
 
 .PHONY: clean vars test all

@@ -1,3 +1,6 @@
+
+#ifndef _TEST
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "cpu.h"
@@ -17,7 +20,7 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-
+#endif
 
 
 

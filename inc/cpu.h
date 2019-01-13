@@ -5,13 +5,19 @@
 
 void initCpu(cpu_t* cpu);
 
-flagValue_t getFlag(cpu_t* cpu, flags_t flag);
-
-
-void setFlags(cpu_t* cpu, flagValue_t z_value, flagValue_t n_value, flagValue_t h_value, flagValue_t c_value);
-void setFlag(cpu_t* cpu, flags_t flag, flagValue_t value);
+flag_value_t getFlag(cpu_t* cpu, flags_t flag);
+void setFlag(cpu_t* cpu, flags_t flag, flag_value_t value);
 
 void executeOpcode(uint8_t opcode, cpu_t* cpu, mem_t* mem);
+
+void executeEightBitALUOp(
+    cpu_t* cpu,
+    uint8_t* resultReg,
+    uint8_t op1,
+    uint8_t op2,
+    alu_op_t operation
+);
+
 
 void printFlags(cpu_t* cpu);
 void printRegs(cpu_t* cpu);
