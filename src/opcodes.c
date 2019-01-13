@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "opcodes.h"
 #include "cpu.h"
+#include "mem.h"
 
 // unused func as placeholder
 void unusedFunc(cpu_t* cpu, mem_t* mem){}
@@ -409,324 +410,378 @@ void CCF(cpu_t* cpu, mem_t* mem)
 // flags:Z=-,N=-,H=-,C=-
 void LD_B_B(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_B, cpu->reg_B);
 }
 
 // cycles=4,addr=0x41,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_B_C(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_B, cpu->reg_C);
 }
 
 // cycles=4,addr=0x42,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_B_D(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_B, cpu->reg_D);
 }
 
 // cycles=4,addr=0x43,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_B_E(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_B, cpu->reg_E);
 }
 
 // cycles=4,addr=0x44,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_B_H(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_B, cpu->reg_H);
 }
 
 // cycles=4,addr=0x45,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_B_L(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_B, cpu->reg_L);
 }
 
 // cycles=8,addr=0x46,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_B__OP_HL_CP_(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_B, fetchEightBitMem(mem, cpu->reg_HL));
 }
 
 // cycles=4,addr=0x47,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_B_A(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_B, cpu->reg_A);
 }
 
 // cycles=4,addr=0x48,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_C_B(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_C, cpu->reg_B);
 }
 
 // cycles=4,addr=0x49,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_C_C(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_C, cpu->reg_C);
 }
 
 // cycles=4,addr=0x4a,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_C_D(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_C, cpu->reg_D);
 }
 
 // cycles=4,addr=0x4b,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_C_E(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_C, cpu->reg_E);
 }
 
 // cycles=4,addr=0x4c,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_C_H(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_C, cpu->reg_H);
 }
 
 // cycles=4,addr=0x4d,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_C_L(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_C, cpu->reg_L);
 }
 
 // cycles=8,addr=0x4e,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_C__OP_HL_CP_(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_C, fetchEightBitMem(mem, cpu->reg_HL));
 }
 
 // cycles=4,addr=0x4f,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_C_A(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_C, cpu->reg_A);
 }
 
 // cycles=4,addr=0x50,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_D_B(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_D, cpu->reg_B);
 }
 
 // cycles=4,addr=0x51,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_D_C(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_D, cpu->reg_C);
 }
 
 // cycles=4,addr=0x52,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_D_D(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_D, cpu->reg_D);
 }
 
 // cycles=4,addr=0x53,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_D_E(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_D, cpu->reg_E);
 }
 
 // cycles=4,addr=0x54,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_D_H(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_D, cpu->reg_H);
 }
 
 // cycles=4,addr=0x55,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_D_L(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_D, cpu->reg_L);
 }
 
 // cycles=8,addr=0x56,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_D__OP_HL_CP_(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_D, fetchEightBitMem(mem, cpu->reg_HL));
 }
 
 // cycles=4,addr=0x57,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_D_A(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_D, cpu->reg_A);
 }
 
 // cycles=4,addr=0x58,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_E_B(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_E, cpu->reg_B);
 }
 
 // cycles=4,addr=0x59,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_E_C(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_E, cpu->reg_C);
 }
 
 // cycles=4,addr=0x5a,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_E_D(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_E, cpu->reg_D);
 }
 
 // cycles=4,addr=0x5b,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_E_E(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_E, cpu->reg_E);
 }
 
 // cycles=4,addr=0x5c,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_E_H(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_E, cpu->reg_H);
 }
 
 // cycles=4,addr=0x5d,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_E_L(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_E, cpu->reg_L);
 }
 
 // cycles=8,addr=0x5e,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_E__OP_HL_CP_(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_E, fetchEightBitMem(mem, cpu->reg_HL));
 }
 
 // cycles=4,addr=0x5f,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_E_A(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_E, cpu->reg_A);
 }
 
 // cycles=4,addr=0x60,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_H_B(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_H, cpu->reg_B);
 }
 
 // cycles=4,addr=0x61,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_H_C(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_H, cpu->reg_C);
 }
 
 // cycles=4,addr=0x62,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_H_D(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_H, cpu->reg_D);
 }
 
 // cycles=4,addr=0x63,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_H_E(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_H, cpu->reg_E);
 }
 
 // cycles=4,addr=0x64,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_H_H(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_H, cpu->reg_H);
 }
 
 // cycles=4,addr=0x65,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_H_L(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_H, cpu->reg_L);
 }
 
 // cycles=8,addr=0x66,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_H__OP_HL_CP_(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_H, fetchEightBitMem(mem, cpu->reg_HL));
 }
 
 // cycles=4,addr=0x67,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_H_A(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_H, cpu->reg_A);
 }
 
 // cycles=4,addr=0x68,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_L_B(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_L, cpu->reg_B);
 }
 
 // cycles=4,addr=0x69,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_L_C(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_L, cpu->reg_C);
 }
 
 // cycles=4,addr=0x6a,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_L_D(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_L, cpu->reg_D);
 }
 
 // cycles=4,addr=0x6b,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_L_E(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_L, cpu->reg_E);
 }
 
 // cycles=4,addr=0x6c,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_L_H(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_L, cpu->reg_H);
 }
 
 // cycles=4,addr=0x6d,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_L_L(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_L, cpu->reg_L);
 }
 
 // cycles=8,addr=0x6e,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_L__OP_HL_CP_(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_L, fetchEightBitMem(mem, cpu->reg_HL));
 }
 
 // cycles=4,addr=0x6f,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_L_A(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_L, cpu->reg_A);
 }
 
 // cycles=8,addr=0x70,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD__OP_HL_CP__B(cpu_t* cpu, mem_t* mem)
 {
+    setEightBitMem(mem, cpu->reg_HL, cpu->reg_B);
 }
 
 // cycles=8,addr=0x71,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD__OP_HL_CP__C(cpu_t* cpu, mem_t* mem)
 {
+    setEightBitMem(mem, cpu->reg_HL, cpu->reg_C);
 }
 
 // cycles=8,addr=0x72,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD__OP_HL_CP__D(cpu_t* cpu, mem_t* mem)
 {
+    setEightBitMem(mem, cpu->reg_HL, cpu->reg_D);
 }
 
 // cycles=8,addr=0x73,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD__OP_HL_CP__E(cpu_t* cpu, mem_t* mem)
 {
+    setEightBitMem(mem, cpu->reg_HL, cpu->reg_E);
 }
 
 // cycles=8,addr=0x74,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD__OP_HL_CP__H(cpu_t* cpu, mem_t* mem)
 {
+    setEightBitMem(mem, cpu->reg_HL, cpu->reg_H);
 }
 
 // cycles=8,addr=0x75,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD__OP_HL_CP__L(cpu_t* cpu, mem_t* mem)
 {
+    setEightBitMem(mem, cpu->reg_HL, cpu->reg_L);
 }
 
 // cycles=4,addr=0x76,length=1
@@ -739,54 +794,63 @@ void HALT(cpu_t* cpu, mem_t* mem)
 // flags:Z=-,N=-,H=-,C=-
 void LD__OP_HL_CP__A(cpu_t* cpu, mem_t* mem)
 {
+    setEightBitMem(mem, cpu->reg_HL, cpu->reg_A);
 }
 
 // cycles=4,addr=0x78,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_A_B(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_A, cpu->reg_B);
 }
 
 // cycles=4,addr=0x79,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_A_C(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_A, cpu->reg_C);
 }
 
 // cycles=4,addr=0x7a,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_A_D(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_A, cpu->reg_D);
 }
 
 // cycles=4,addr=0x7b,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_A_E(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_A, cpu->reg_E);
 }
 
 // cycles=4,addr=0x7c,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_A_H(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_A, cpu->reg_H);
 }
 
 // cycles=4,addr=0x7d,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_A_L(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_A, cpu->reg_L);
 }
 
 // cycles=8,addr=0x7e,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_A__OP_HL_CP_(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_A, fetchEightBitMem(mem, cpu->reg_HL));
 }
 
 // cycles=4,addr=0x7f,length=1
 // flags:Z=-,N=-,H=-,C=-
 void LD_A_A(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_A, cpu->reg_A);
 }
 
 // cycles=4,addr=0x80,length=1
@@ -835,6 +899,7 @@ void ADD_A_L(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=H,C=C
 void ADD_A__OP_HL_CP_(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, fetchEightBitMem(mem, cpu->reg_HL), ALU_ADD);
 }
 
 // cycles=4,addr=0x87,length=1
@@ -890,6 +955,7 @@ void ADC_A_L(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=H,C=C
 void ADC_A__OP_HL_CP_(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, fetchEightBitMem(mem, cpu->reg_HL), ALU_ADC);
 }
 
 // cycles=4,addr=0x8f,length=1
@@ -958,48 +1024,56 @@ void SUB_A(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=1,H=H,C=C
 void SBC_A_B(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_B, ALU_SBC);
 }
 
 // cycles=4,addr=0x99,length=1
 // flags:Z=Z,N=1,H=H,C=C
 void SBC_A_C(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_C, ALU_SBC);
 }
 
 // cycles=4,addr=0x9a,length=1
 // flags:Z=Z,N=1,H=H,C=C
 void SBC_A_D(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_D, ALU_SBC);
 }
 
 // cycles=4,addr=0x9b,length=1
 // flags:Z=Z,N=1,H=H,C=C
 void SBC_A_E(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_E, ALU_SBC);
 }
 
 // cycles=4,addr=0x9c,length=1
 // flags:Z=Z,N=1,H=H,C=C
 void SBC_A_H(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_H, ALU_SBC);
 }
 
 // cycles=4,addr=0x9d,length=1
 // flags:Z=Z,N=1,H=H,C=C
 void SBC_A_L(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_L, ALU_SBC);
 }
 
 // cycles=8,addr=0x9e,length=1
 // flags:Z=Z,N=1,H=H,C=C
 void SBC_A__OP_HL_CP_(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, fetchEightBitMem(mem, cpu->reg_HL), ALU_SBC);
 }
 
 // cycles=4,addr=0x9f,length=1
 // flags:Z=Z,N=1,H=H,C=C
 void SBC_A_A(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_A, ALU_SBC);
 }
 
 // cycles=4,addr=0xa0,length=1

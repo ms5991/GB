@@ -251,6 +251,14 @@ void executeEightBitALUOp(
     calculateAndSetAllFlags(cpu, resultReg, op1, op2, zFlagZeroOp, nFlagSubOp, hFlagHalfCarryOp, cFlagCarryOp, operation);
 }
 
+
+void executeLoad(
+    uint8_t* destinationReg,
+    uint8_t value)
+{
+    *destinationReg = value;
+}
+
 void executeOpcode(uint8_t opcode, cpu_t* cpu, mem_t* mem)
 {
    normalOpcodes[opcode](cpu, mem);
