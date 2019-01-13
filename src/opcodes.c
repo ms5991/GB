@@ -848,6 +848,8 @@ void ADD_A_A(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=0,H=H,C=C
 void ADC_A_B(cpu_t* cpu, mem_t* mem)
 {
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, getFlag(cpu, flag_C) == FLAG_SET ? 1 : 0, ALU_ADD);
+    executeEightBitALUOp(cpu, &cpu->reg_A, cpu->reg_A, cpu->reg_B, ALU_ADD);
 }
 
 // cycles=4,addr=0x89,length=1

@@ -538,6 +538,174 @@ void testEightBitXorAllOpsZero()
     printf("Test function passed: [%s]\n", __func__);
 }
 
+void testEightBitADCCarryFlagIsZeroNoCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x00;
+    uint8_t toAdd = 0x01;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toAdd;
+
+    flag_value_t startingFlagValue = FLAG_NOT_SET;
+    setFlag(&cpu, flag_C, startingFlagValue);
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_ADC);
+
+    uint8_t correctValue = (initialValue + toAdd + (startingFlagValue == FLAG_SET ? 1 : 0));
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toAdd);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_NOT_SET, FLAG_NOT_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitADCCarryFlagIsNonZeroNoCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x00;
+    uint8_t toAdd = 0x01;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toAdd;
+
+    flag_value_t startingFlagValue = FLAG_SET;
+    setFlag(&cpu, flag_C, startingFlagValue);
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_ADC);
+
+    uint8_t correctValue = (initialValue + toAdd + (startingFlagValue == FLAG_SET ? 1 : 0));
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toAdd);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_NOT_SET, FLAG_NOT_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitADCCarryFlagIsZeroWithHalfCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x0F;
+    uint8_t toAdd = 0x01;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toAdd;
+
+    flag_value_t startingFlagValue = FLAG_NOT_SET;
+    setFlag(&cpu, flag_C, startingFlagValue);
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_ADC);
+
+    uint8_t correctValue = (initialValue + toAdd + (startingFlagValue == FLAG_SET ? 1 : 0));
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toAdd);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_NOT_SET, FLAG_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitADCCarryFlagIsNonZeroWithHalfCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x0E;
+    uint8_t toAdd = 0x01;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toAdd;
+
+    flag_value_t startingFlagValue = FLAG_SET;
+    setFlag(&cpu, flag_C, startingFlagValue);
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_ADC);
+
+    uint8_t correctValue = (initialValue + toAdd + (startingFlagValue == FLAG_SET ? 1 : 0));
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toAdd);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_NOT_SET, FLAG_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitADCCarryFlagIsZeroWithFullCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0xFF;
+    uint8_t toAdd = 0x01;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toAdd;
+
+    flag_value_t startingFlagValue = FLAG_NOT_SET;
+    setFlag(&cpu, flag_C, startingFlagValue);
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_ADC);
+
+    uint8_t correctValue = (initialValue + toAdd + (startingFlagValue == FLAG_SET ? 1 : 0));
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toAdd);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_SET, FLAG_NOT_SET, FLAG_SET, FLAG_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitADCCarryFlagIsNonZeroWithFullCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0xFE;
+    uint8_t toAdd = 0x01;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toAdd;
+
+    flag_value_t startingFlagValue = FLAG_SET;
+    setFlag(&cpu, flag_C, startingFlagValue);
+
+    executeEightBitALUOp(&cpu, &cpu.reg_A, cpu.reg_A, cpu.reg_B, ALU_ADC);
+
+    uint8_t correctValue = (initialValue + toAdd + (startingFlagValue == FLAG_SET ? 1 : 0));
+
+    // added zero to nonzero
+    assert(cpu.reg_A == correctValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toAdd);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_SET, FLAG_NOT_SET, FLAG_SET, FLAG_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
 void runAllEightBitALUTests()
 {
     testEightBitIncFromZero();
@@ -563,4 +731,10 @@ void runAllEightBitALUTests()
     testEightBitXorNonZeroResult();
     testEightBitXorZeroResult();
     testEightBitXorAllOpsZero();
+    testEightBitADCCarryFlagIsZeroNoCarry();
+    testEightBitADCCarryFlagIsNonZeroNoCarry();
+    testEightBitADCCarryFlagIsZeroWithHalfCarry();
+    testEightBitADCCarryFlagIsNonZeroWithHalfCarry();
+    testEightBitADCCarryFlagIsZeroWithFullCarry();
+    testEightBitADCCarryFlagIsNonZeroWithFullCarry();
 }

@@ -15,7 +15,8 @@ typedef enum
     ALU_OR,
     ALU_XOR,
     ALU_INC,
-    ALU_DEC
+    ALU_DEC,
+    ALU_ADC
 } alu_op_t;
 
 typedef uint8_t (*result_flag_calc_t)(

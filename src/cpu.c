@@ -56,6 +56,7 @@ uint8_t isHalfCarry(
     {
         case ALU_ADD:
         case ALU_INC:
+        case ALU_ADC:
             return ((op1 ^ op2 ^ result) & 0x10) == 0x10;
         case ALU_SUB:
         case ALU_DEC:
@@ -203,6 +204,16 @@ void executeEightBitALUOp(
             nFlagSubOp = OP_FLAG_SET_OFF;
             hFlagHalfCarryOp = OP_FLAG_SET_OFF;
             cFlagCarryOp = OP_FLAG_SET_OFF;
+        
+            break;
+        case ALU_ADC:
+
+            *resultReg = op1 + op2 + (getFlag(cpu, flag_C) == FLAG_SET ? 1 : 0);
+
+            zFlagZeroOp = OP_FLAG_PER_RESULT;
+            nFlagSubOp = OP_FLAG_SET_OFF;
+            hFlagHalfCarryOp = OP_FLAG_PER_RESULT;
+            cFlagCarryOp = OP_FLAG_PER_RESULT;
         
             break;
     }
