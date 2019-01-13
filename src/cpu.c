@@ -49,6 +49,15 @@ uint8_t isCarry(
             return result < op1;
         case ALU_SUB:
             return result > op1;
+        case ALU_SBC:
+            // if carry flag is set, account for extra 1 by using >= instead of >
+            if (getFlag(cpu, flag_C) == FLAG_SET)
+            {
+                return result >= op1;
+            }
+            // carry flag not set, so this is normal subtraction
+            return result > op1;
+
         default:
             return 0;
     }
@@ -70,6 +79,7 @@ uint8_t isHalfCarry(
             return ((op1 ^ op2 ^ result) & 0x10) == 0x10;
         case ALU_SUB:
         case ALU_DEC:
+        case ALU_SBC:
             return ((op1 ^ op2 ^ result) & 0x10) == 0x10;
         default:
             return 0;
@@ -222,6 +232,16 @@ void executeEightBitALUOp(
 
             zFlagZeroOp = OP_FLAG_PER_RESULT;
             nFlagSubOp = OP_FLAG_SET_OFF;
+            hFlagHalfCarryOp = OP_FLAG_PER_RESULT;
+            cFlagCarryOp = OP_FLAG_PER_RESULT;
+        
+            break;
+        case ALU_SBC:
+
+            *resultReg = op1 - op2 - (getFlag(cpu, flag_C) == FLAG_SET ? 1 : 0);
+
+            zFlagZeroOp = OP_FLAG_PER_RESULT;
+            nFlagSubOp = OP_FLAG_SET_ON;
             hFlagHalfCarryOp = OP_FLAG_PER_RESULT;
             cFlagCarryOp = OP_FLAG_PER_RESULT;
         
