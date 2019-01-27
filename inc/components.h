@@ -4,6 +4,20 @@
 #include <stdint.h>
 
 #define RAM_SIZE 65536
+/*
+#ifdef DEBUG
+
+#define DEBUG_OPCODE(functionName, cpu)({\
+    printf("Executing [%s] at PC = [%#04x]\n", functionName, cpu->reg_PC - 1);\
+})
+
+#else
+
+#define DEBUG_OPCODE(functionName)({\
+})
+
+#endif
+*/
 
 typedef struct
 {

@@ -24,6 +24,14 @@ void executeOpcode(
      mem_t* mem
 );
 
+uint16_t readAndAdvancePC(
+    cpu_t* cpu
+);
+
+uint16_t extendRegisterToMemValue(
+    uint8_t reg
+);
+
 void executeEightBitALUOp(
     cpu_t* cpu,
     uint8_t* resultReg,

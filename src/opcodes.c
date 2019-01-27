@@ -50,6 +50,7 @@ void DEC_B(cpu_t* cpu, mem_t* mem)
 // flags:Z=-,N=-,H=-,C=-
 void LD_B_d8(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_B, fetchEightBitMem(mem, readAndAdvancePC(cpu)));
 }
 
 // cycles=4,addr=0x7,length=1
@@ -74,6 +75,7 @@ void ADD_HL_BC(cpu_t* cpu, mem_t* mem)
 // flags:Z=-,N=-,H=-,C=-
 void LD_A__OP_BC_CP_(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_A, fetchEightBitMem(mem, cpu->reg_BC));
 }
 
 // cycles=8,addr=0xb,length=1
@@ -100,6 +102,7 @@ void DEC_C(cpu_t* cpu, mem_t* mem)
 // flags:Z=-,N=-,H=-,C=-
 void LD_C_d8(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_C, fetchEightBitMem(mem, readAndAdvancePC(cpu)));
 }
 
 // cycles=4,addr=0xf,length=1
@@ -150,6 +153,7 @@ void DEC_D(cpu_t* cpu, mem_t* mem)
 // flags:Z=-,N=-,H=-,C=-
 void LD_D_d8(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_D, fetchEightBitMem(mem, readAndAdvancePC(cpu)));
 }
 
 // cycles=4,addr=0x17,length=1
@@ -174,6 +178,7 @@ void ADD_HL_DE(cpu_t* cpu, mem_t* mem)
 // flags:Z=-,N=-,H=-,C=-
 void LD_A__OP_DE_CP_(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_A, fetchEightBitMem(mem, cpu->reg_DE));
 }
 
 // cycles=8,addr=0x1b,length=1
@@ -200,6 +205,7 @@ void DEC_E(cpu_t* cpu, mem_t* mem)
 // flags:Z=-,N=-,H=-,C=-
 void LD_E_d8(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_E, fetchEightBitMem(mem, readAndAdvancePC(cpu)));
 }
 
 // cycles=4,addr=0x1f,length=1
@@ -250,6 +256,7 @@ void DEC_H(cpu_t* cpu, mem_t* mem)
 // flags:Z=-,N=-,H=-,C=-
 void LD_H_d8(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_H, fetchEightBitMem(mem, readAndAdvancePC(cpu)));
 }
 
 // cycles=4,addr=0x27,length=1
@@ -274,6 +281,7 @@ void ADD_HL_HL(cpu_t* cpu, mem_t* mem)
 // flags:Z=-,N=-,H=-,C=-
 void LD_A__OP_HL_PLUS__CP_(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_A, fetchEightBitMem(mem, cpu->reg_HL++));
 }
 
 // cycles=8,addr=0x2b,length=1
@@ -300,6 +308,7 @@ void DEC_L(cpu_t* cpu, mem_t* mem)
 // flags:Z=-,N=-,H=-,C=-
 void LD_L_d8(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_L, fetchEightBitMem(mem, readAndAdvancePC(cpu)));
 }
 
 // cycles=4,addr=0x2f,length=1
@@ -372,6 +381,7 @@ void ADD_HL_SP(cpu_t* cpu, mem_t* mem)
 // flags:Z=-,N=-,H=-,C=-
 void LD_A__OP_HL_MINUS__CP_(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_A, fetchEightBitMem(mem, cpu->reg_HL--));
 }
 
 // cycles=8,addr=0x3b,length=1
@@ -398,6 +408,7 @@ void DEC_A(cpu_t* cpu, mem_t* mem)
 // flags:Z=-,N=-,H=-,C=-
 void LD_A_d8(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_A, fetchEightBitMem(mem, readAndAdvancePC(cpu)));
 }
 
 // cycles=4,addr=0x3f,length=1
@@ -1545,6 +1556,7 @@ void POP_AF(cpu_t* cpu, mem_t* mem)
 // flags:Z=-,N=-,H=-,C=-
 void LD_A__OP_C_CP_(cpu_t* cpu, mem_t* mem)
 {
+    executeLoad(&cpu->reg_A, fetchEightBitMem(mem, extendRegisterToMemValue(cpu->reg_C)));
 }
 
 // cycles=4,addr=0xf3,length=1
