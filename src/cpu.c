@@ -276,7 +276,7 @@ uint16_t readAndAdvancePC(
 uint16_t extendRegisterToMemValue(
     uint8_t reg)
 {
-    return 0xFF00 + reg
+    return 0xFF00 + reg;
 }
 
 flag_value_t getFlag(
