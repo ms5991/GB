@@ -1256,36 +1256,48 @@ void OR_A(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=1,H=H,C=C
 void CP_B(cpu_t* cpu, mem_t* mem)
 {
+    uint8_t dummy;
+    executeEightBitALUOp(cpu, &dummy, cpu->reg_A, cpu->reg_B, ALU_CP);
 }
 
 // cycles=4,addr=0xb9,length=1
 // flags:Z=Z,N=1,H=H,C=C
 void CP_C(cpu_t* cpu, mem_t* mem)
 {
+    uint8_t dummy;
+    executeEightBitALUOp(cpu, &dummy, cpu->reg_A, cpu->reg_C, ALU_CP);
 }
 
 // cycles=4,addr=0xba,length=1
 // flags:Z=Z,N=1,H=H,C=C
 void CP_D(cpu_t* cpu, mem_t* mem)
 {
+    uint8_t dummy;
+    executeEightBitALUOp(cpu, &dummy, cpu->reg_A, cpu->reg_D, ALU_CP);
 }
 
 // cycles=4,addr=0xbb,length=1
 // flags:Z=Z,N=1,H=H,C=C
 void CP_E(cpu_t* cpu, mem_t* mem)
 {
+    uint8_t dummy;
+    executeEightBitALUOp(cpu, &dummy, cpu->reg_A, cpu->reg_E, ALU_CP);
 }
 
 // cycles=4,addr=0xbc,length=1
 // flags:Z=Z,N=1,H=H,C=C
 void CP_H(cpu_t* cpu, mem_t* mem)
 {
+    uint8_t dummy;
+    executeEightBitALUOp(cpu, &dummy, cpu->reg_A, cpu->reg_H, ALU_CP);
 }
 
 // cycles=4,addr=0xbd,length=1
 // flags:Z=Z,N=1,H=H,C=C
 void CP_L(cpu_t* cpu, mem_t* mem)
 {
+    uint8_t dummy;
+    executeEightBitALUOp(cpu, &dummy, cpu->reg_A, cpu->reg_L, ALU_CP);
 }
 
 // cycles=8,addr=0xbe,length=1
@@ -1298,6 +1310,8 @@ void CP__OP_HL_CP_(cpu_t* cpu, mem_t* mem)
 // flags:Z=Z,N=1,H=H,C=C
 void CP_A(cpu_t* cpu, mem_t* mem)
 {
+    uint8_t dummy;
+    executeEightBitALUOp(cpu, &dummy, cpu->reg_A, cpu->reg_A, ALU_CP);
 }
 
 // cycles=20,addr=0xc0,length=1
