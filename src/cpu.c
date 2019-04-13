@@ -48,6 +48,7 @@ uint8_t isCarry(
             // carry flag not set, so this is normal addition
             return result < op1;
         case ALU_SUB:
+        case ALU_CP:
             return result > op1;
         case ALU_SBC:
             // if carry flag is set, account for extra 1 by using >= instead of >
@@ -80,6 +81,7 @@ uint8_t isHalfCarry(
         case ALU_SUB:
         case ALU_DEC:
         case ALU_SBC:
+        case ALU_CP:
             return ((op1 ^ op2 ^ result) & 0x10) == 0x10;
         default:
             return 0;
@@ -246,17 +248,52 @@ void executeEightBitALUOp(
             cFlagCarryOp = OP_FLAG_PER_RESULT;
         
             break;
+        case ALU_CP:
+
+            *resultReg = op1 - op2;
+
+            zFlagZeroOp = OP_FLAG_PER_RESULT;
+            nFlagSubOp = OP_FLAG_SET_ON;
+            hFlagHalfCarryOp = OP_FLAG_PER_RESULT;
+            cFlagCarryOp = OP_FLAG_PER_RESULT;
+        
+            break;
     }
 
     calculateAndSetAllFlags(cpu, resultReg, op1, op2, zFlagZeroOp, nFlagSubOp, hFlagHalfCarryOp, cFlagCarryOp, operation);
 }
 
-void executeOpcode(uint8_t opcode, cpu_t* cpu, mem_t* mem)
+
+void executeLoad(
+    uint8_t* destinationReg,
+    uint8_t value)
+{
+    *destinationReg = value;
+}
+
+void executeOpcode(
+    uint8_t opcode, 
+    cpu_t* cpu, 
+    mem_t* mem)
 {
    normalOpcodes[opcode](cpu, mem);
 }
 
-flag_value_t getFlag(cpu_t* cpu, flags_t flag)
+uint16_t readAndAdvancePC(
+    cpu_t* cpu)
+{
+    return cpu->reg_PC++;
+}
+
+uint16_t extendRegisterToMemValue(
+    uint8_t reg)
+{
+    return 0xFF00 + reg;
+}
+
+flag_value_t getFlag(
+    cpu_t* cpu, 
+    flags_t flag)
 {
     if (cpu->reg_F & flag)
        return FLAG_SET;
@@ -264,7 +301,10 @@ flag_value_t getFlag(cpu_t* cpu, flags_t flag)
 }
 
 
-void setFlag(cpu_t* cpu, flags_t flag, flag_value_t value)
+void setFlag(
+    cpu_t* cpu, 
+    flags_t flag, 
+    flag_value_t value)
 {
     if (value == FLAG_SET)
     {
@@ -278,7 +318,8 @@ void setFlag(cpu_t* cpu, flags_t flag, flag_value_t value)
     }
 }
 
-void printFlags(cpu_t* cpu)
+void printFlags(
+    cpu_t* cpu)
 {
     printf("Flags:\n");
     printf("\tZ: %u\n",getFlag(cpu, flag_Z));
@@ -286,7 +327,8 @@ void printFlags(cpu_t* cpu)
     printf("\tH: %u\n",getFlag(cpu, flag_H));
     printf("\tC: %u\n",getFlag(cpu, flag_C));
 }
-void printRegs(cpu_t* cpu)
+void printRegs(
+    cpu_t* cpu)
 {
     printf("Registers:\n");
     printf("\tA: %u\n",cpu->reg_A);

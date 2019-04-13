@@ -1013,6 +1013,120 @@ void testEightBitSBCRegANonZeroCarryFlagIsNonZeroWithFullCarry()
     printf("Test function passed: [%s]\n", __func__);
 }
 
+void testEightBitCPNoCarryZeroResult()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x01;
+    uint8_t toSub = 0x01;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    uint8_t dummy;
+    executeEightBitALUOp(&cpu, &dummy, cpu.reg_A, cpu.reg_B, ALU_CP);
+
+    uint8_t correctValue = (initialValue - toSub);
+
+    // subtraction occurred
+    assert(dummy == correctValue);
+
+    // make sure A is unchanged
+    assert(cpu.reg_A == initialValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_SET, FLAG_SET, FLAG_NOT_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitCPNoCarryNonZeroResult()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x02;
+    uint8_t toSub = 0x01;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    uint8_t dummy;
+    executeEightBitALUOp(&cpu, &dummy, cpu.reg_A, cpu.reg_B, ALU_CP);
+
+    uint8_t correctValue = (initialValue - toSub);
+
+    // subtraction occurred
+    assert(dummy == correctValue);
+
+    // make sure A is unchanged
+    assert(cpu.reg_A == initialValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_SET, FLAG_NOT_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitCPFromNonZeroToNonZeroWithHalfCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x10;
+    uint8_t toSub = 0x0E;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    uint8_t dummy;
+    executeEightBitALUOp(&cpu, &dummy, cpu.reg_A, cpu.reg_B, ALU_CP);
+
+    uint8_t correctValue = (initialValue - toSub);
+    // subtraction occurred
+    assert(dummy == correctValue);
+
+    // make sure A is unchanged
+    assert(cpu.reg_A == initialValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_SET, FLAG_SET, FLAG_NOT_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
+void testEightBitCPFromNonZeroToNonZeroWithFullCarry()
+{
+    cpu_t cpu = getTestCpu();
+    uint8_t initialValue = 0x10;
+    uint8_t toSub = 0xFF;
+
+    cpu.reg_A = initialValue;
+    cpu.reg_B = toSub;
+
+    uint8_t dummy;
+    executeEightBitALUOp(&cpu, &dummy, cpu.reg_A, cpu.reg_B, ALU_CP);
+
+    uint8_t correctValue = (initialValue - toSub);
+    // subtraction occurred
+    assert(dummy == correctValue);
+
+    // make sure A is unchanged
+    assert(cpu.reg_A == initialValue);
+
+    // make sure B is unchanged
+    assert(cpu.reg_B == toSub);
+
+    // Z (zero), N (sub) H (half carry) C (carry)
+    VERIFY_FLAGS(&cpu, FLAG_NOT_SET, FLAG_SET, FLAG_SET, FLAG_SET);
+
+    printf("Test function passed: [%s]\n", __func__);
+}
+
 void runAllEightBitALUTests()
 {
     testEightBitIncFromZero();
@@ -1064,4 +1178,9 @@ void runAllEightBitALUTests()
     testEightBitSBCRegAZeroCarryFlagIsNonZeroWithFullCarry();
     testEightBitSBCRegAMaxCarryFlagIsNonZeroWithFullCarry();
     testEightBitSBCRegANonZeroCarryFlagIsNonZeroWithFullCarry();
+
+    testEightBitCPNoCarryZeroResult();
+    testEightBitCPNoCarryNonZeroResult();
+    testEightBitCPFromNonZeroToNonZeroWithHalfCarry();
+    testEightBitCPFromNonZeroToNonZeroWithFullCarry();
 }
