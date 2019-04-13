@@ -1,4 +1,5 @@
 #include "cpu.h"
+#include "mem.h"
 #include "opcodes.h"
 #include <stdio.h>
 
@@ -276,7 +277,15 @@ void executeOpcode(
     cpu_t* cpu, 
     mem_t* mem)
 {
-   normalOpcodes[opcode](cpu, mem);
+    if (opcode == 0xCB)
+    {
+        opcode = fetchEightBitMem(mem, readAndAdvancePC(cpu));
+        cbOpcodes[opcode](cpu, mem);
+    }
+    else
+    {
+        normalOpcodes[opcode](cpu, mem);
+    }
 }
 
 uint16_t readAndAdvancePC(
