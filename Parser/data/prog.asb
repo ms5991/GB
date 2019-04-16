@@ -1,0 +1,6 @@
+ADD HL DE
+LD HL d16
+RES 2 C
+BIT 6 C
+LD A (DE)
+JR r8

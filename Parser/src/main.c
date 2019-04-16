@@ -19,14 +19,9 @@ int getInput(char* inputBuffer)
             return 0;
         }
 
-        if (i == INPUT_BUFFER_SIZE - 1 || current == '\n' || current == '\r')
+        if (i == INPUT_BUFFER_SIZE - 1 || current == '\n' || current == '\r' || current == '\0')
         {
             inputBuffer[i] = '\0';
-            break;
-        }
-        else if (current == '\0')
-        {
-            inputBuffer[i] = current;
             break;
         }
         else
@@ -70,18 +65,45 @@ void buildOpcodeLookupTable()
     }
 }
 
+void removeNewlineAndCarriageReturn(char* line)
+{
+    int len = strlen(line);
+    if (line[len - 2] == '\r')
+	line[len - 2] = '\0';
+    if (line[len - 1] == '\n')
+        line[len - 1] = '\0';
+}
+
 int main(int argc, char const *argv[])
 {
     buildOpcodeLookupTable();
 
-    int i;
-    for (i=0;i<500;i++)
+    const char *fileName =  argv[1];
+
+    printf("File: [%s]\n", fileName);
+
+    FILE* file = fopen(fileName, "r");
+    if (file != NULL)
     {
-        char* opcode = getValue(assembly[i]);
-  //      printf("For input [%s] got opcode [%s]\n", assembly[i], opcode);
-        free(opcode);
-        free(assembly[i]);
+        char line[INPUT_BUFFER_SIZE];
+        while (!feof(file))
+        {
+            if (fgets(line, sizeof(line), file) != NULL)
+            {
+		removeNewlineAndCarriageReturn(line);
+		char* opcode = getValue(line);
+                printf("Got value [%s] which has opcode [%s] in hex [%x]\n", line, opcode, strtol(opcode, NULL, 16));
+		free(opcode);
+           }
+        }
+
+        fclose(file);
     }
+    else
+    {
+        printf("No file!\n");
+    }
+
 
     freeTable();
 }

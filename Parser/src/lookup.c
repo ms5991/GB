@@ -15,6 +15,9 @@ unsigned int hash(char* key)
     {
         result = (result << 5) + result + key[i];
     }
+#ifdef DEBUG
+    printf("Got result: [%d]\n", result);
+#endif
     return result % LOOKUP_SIZE;
 }
 
@@ -79,8 +82,10 @@ int putValue(char* key, char* value)
         // put entry at beginning of bucket
         ptr->next = table[hashValue];
 
+#ifdef DEBUG
         if (table[hashValue] != NULL)
-            printf("Collision at hash value [%d]!\n", hashValue);
+            printf("Collision at hash value [%d], previous was [%s]!\n", hashValue, table[hashValue]->key);
+#endif
 
         // update the table
         table[hashValue] = ptr;
@@ -106,8 +111,10 @@ void freeTable()
     {
         lookupEntry_t* ptr = table[i];
 
+#ifdef DEBUG
         if (ptr == NULL)
             printf("Hash value [%d] was unused\n", i);
+#endif
 
         while (ptr != NULL)
         {
