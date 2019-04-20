@@ -6,7 +6,7 @@
 #define INPUT_BUFFER_SIZE 32
 #define MAX_OPCODE_COUNT 1024
 
-
+// gets input from stdin to build the opcode table
 int getOpcodeInput(char* inputBuffer)
 {
     int i = 0;
@@ -35,12 +35,12 @@ int getOpcodeInput(char* inputBuffer)
     return 1;
 }
 
-char* assembly[500];
-
 void buildOpcodeLookupTable()
 {
+    // buffers for loading file contents
     char* assemblyBuffer = (char*)malloc(INPUT_BUFFER_SIZE * sizeof(char));
     char* opcodeBuffer = (char*)malloc(INPUT_BUFFER_SIZE * sizeof(char));
+
     int assemblyCodeRet = 1;
     int opcodeRet = 1;
     int putRet = 1;
@@ -53,7 +53,7 @@ void buildOpcodeLookupTable()
 
         if (assemblyCodeRet && opcodeRet)
         {
-            assembly[i] = strdup(assemblyBuffer);
+            // put the value in the lookup
             putRet = putValue(assemblyBuffer, opcodeBuffer);
 
             if (!putRet)
@@ -65,8 +65,14 @@ void buildOpcodeLookupTable()
             i++;
         }
     }
+
+    // free input buffers
+    free(assemblyBuffer);
+    free(opcodeBuffer);
 }
 
+// checks the last two characters of the line and 
+// replaces \r and \n with \0
 void removeNewlineAndCarriageReturn(char* line)
 {
     int len = strlen(line);
@@ -76,6 +82,7 @@ void removeNewlineAndCarriageReturn(char* line)
         line[len - 1] = '\0';
 }
 
+// returns an array of uint8_t as represented by str
 int splitStringToBytes(char* str, uint8_t* bytes, int numBytes)
 {
     int i;
@@ -96,9 +103,13 @@ int splitStringToBytes(char* str, uint8_t* bytes, int numBytes)
 
 int main(int argc, char const *argv[])
 {
+    // create the assembly to opcode lookup table
     buildOpcodeLookupTable();
 
+    // assembly file
     const char *inputFile =  argv[1];
+
+    // binary file
     const char *outputFile =  argv[2];
 
     printf("Input inputFilePtr=[%s], output inputFilePtr=[%s]\n", inputFile, outputFile);
@@ -111,16 +122,22 @@ int main(int argc, char const *argv[])
         char line[INPUT_BUFFER_SIZE];
         while (!feof(inputFilePtr))
         {
+            // get the next line of assembly from the file
             if (fgets(line, sizeof(line), inputFilePtr) != NULL)
             {
+                // get rid of \n and \r
                 removeNewlineAndCarriageReturn(line);
+
+                // get the opcode from the lookup
                 char* opcodeWithPrefix = getValue(line);
 
+                // get the bytes represented by this opcode string
                 int len = strlen(opcodeWithPrefix);
                 int numBytes = len / 2;
                 uint8_t* bytes = (uint8_t*)malloc(numBytes * sizeof(uint8_t));
-
                 splitStringToBytes(opcodeWithPrefix, bytes, numBytes);
+
+                // put the uint8_t into mem
                 int i;
                 for (i=0;i<numBytes;i++)
                 {
@@ -128,6 +145,7 @@ int main(int argc, char const *argv[])
                     totalBytes++;
                 }
 
+                // free memory
                 free(bytes);
                 free(opcodeWithPrefix);
            }
@@ -140,11 +158,15 @@ int main(int argc, char const *argv[])
         if (outputFilePtr != NULL)
         {
             printf("Writing length [%d]\n", totalBytes);
+
+            // write the length as uint16_t
             fwrite(&totalBytes, sizeof(uint16_t), 1, outputFilePtr);
             int i;
             for (i=0;i<totalBytes;i++)
             {
                 printf("Writing value [%x]\n", inputFileInMem[i]);
+
+                // write each byte to the file
                 fwrite(&inputFileInMem[i], sizeof(uint8_t), 1, outputFilePtr);
             }
 
@@ -160,7 +182,6 @@ int main(int argc, char const *argv[])
     {
         printf("No inputFilePtr!\n");
     }
-
 
     freeTable();
 }
