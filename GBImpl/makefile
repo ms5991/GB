@@ -69,6 +69,8 @@ all: clean dirs $(TARGET)
 # default to all
 default: all
 
+debug: all
+
 # create obj and bin directories if they don't exist
 dirs:
 	mkdir -p $(TARGETDIR) 
@@ -90,6 +92,9 @@ $(OBJDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 # for test, need additional flags and objects
 $(TEST_TARGET): CFLAGS +=  -I $(TESTDIR)/$(INCDIR) -D_TEST
 $(TEST_TARGET): OBJECTS += $(TEST_OBJECTS)
+
+# debug
+debug: CFLAGS += -DDEBUG -g
 
 # the test program relies on the file containing main under tests/src and the objects
 # link the object files into the executable

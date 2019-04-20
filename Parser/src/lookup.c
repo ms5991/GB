@@ -15,9 +15,6 @@ unsigned int hash(char* key)
     {
         result = (result << 5) + result + key[i];
     }
-#ifdef DEBUG
-    printf("Got result: [%d]\n", result);
-#endif
     return result % LOOKUP_SIZE;
 }
 

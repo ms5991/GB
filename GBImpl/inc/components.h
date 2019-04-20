@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define RAM_SIZE 65536
+#define RAM_SIZE 65535
 /*
 #ifdef DEBUG
 
@@ -84,8 +84,8 @@ typedef uint8_t (*result_flag_calc_t)(
 
 typedef enum
 {
-    FLAG_SET,
-    FLAG_NOT_SET
+    FLAG_NOT_SET,
+    FLAG_SET
 } flag_value_t;
 
 

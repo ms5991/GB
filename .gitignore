@@ -2,8 +2,13 @@
 .vscode/*
 
 # Out directories
-bin/*
-obj/*
+GBImpl/bin/*
+GBImpl/obj/*
+
+Parser/bin/*
+Parser/obj/*
+
+*.dat
 
 # Prerequisites
 *.d

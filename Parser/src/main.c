@@ -4,9 +4,10 @@
 #include <stdlib.h>
 #include "lookup.h"
 #define INPUT_BUFFER_SIZE 32
+#define MAX_OPCODE_COUNT 1024
 
 
-int getInput(char* inputBuffer)
+int getOpcodeInput(char* inputBuffer)
 {
     int i = 0;
     int current;
@@ -46,8 +47,9 @@ void buildOpcodeLookupTable()
     int i = 0;
     while (opcodeRet)
     {
-        assemblyCodeRet = getInput(assemblyBuffer);
-        opcodeRet = getInput(opcodeBuffer);
+        // assume the input is well formatted
+        assemblyCodeRet = getOpcodeInput(assemblyBuffer);
+        opcodeRet = getOpcodeInput(opcodeBuffer);
 
         if (assemblyCodeRet && opcodeRet)
         {
@@ -56,7 +58,7 @@ void buildOpcodeLookupTable()
 
             if (!putRet)
             {
-                printf("ERROR putting in dic!");
+                printf("ERROR putting value in lookup!");
                 return;
             }
 
@@ -69,39 +71,94 @@ void removeNewlineAndCarriageReturn(char* line)
 {
     int len = strlen(line);
     if (line[len - 2] == '\r')
-	line[len - 2] = '\0';
+        line[len - 2] = '\0';
     if (line[len - 1] == '\n')
         line[len - 1] = '\0';
+}
+
+int splitStringToBytes(char* str, uint8_t* bytes, int numBytes)
+{
+    int i;
+    for(i=0;i<numBytes;i++)
+    {
+        char buffer[3];
+        buffer[0] = str[2*i];
+        buffer[1] = str[2*i+1];
+        buffer[2] = '\0';
+        bytes[i] = (uint8_t)strtol(buffer, NULL, 16);
+#ifdef DEBUG
+        printf("Wrote byte [%x]\n", bytes[i]);
+#endif
+    }
+
+    return numBytes;
 }
 
 int main(int argc, char const *argv[])
 {
     buildOpcodeLookupTable();
 
-    const char *fileName =  argv[1];
+    const char *inputFile =  argv[1];
+    const char *outputFile =  argv[2];
 
-    printf("File: [%s]\n", fileName);
+    printf("Input inputFilePtr=[%s], output inputFilePtr=[%s]\n", inputFile, outputFile);
 
-    FILE* file = fopen(fileName, "r");
-    if (file != NULL)
+    FILE* inputFilePtr = fopen(inputFile, "r");
+    uint8_t inputFileInMem[MAX_OPCODE_COUNT];
+    uint16_t totalBytes = 0;
+    if (inputFilePtr != NULL)
     {
         char line[INPUT_BUFFER_SIZE];
-        while (!feof(file))
+        while (!feof(inputFilePtr))
         {
-            if (fgets(line, sizeof(line), file) != NULL)
+            if (fgets(line, sizeof(line), inputFilePtr) != NULL)
             {
-		removeNewlineAndCarriageReturn(line);
-		char* opcode = getValue(line);
-                printf("Got value [%s] which has opcode [%s] in hex [%x]\n", line, opcode, strtol(opcode, NULL, 16));
-		free(opcode);
+                removeNewlineAndCarriageReturn(line);
+                char* opcodeWithPrefix = getValue(line);
+
+                int len = strlen(opcodeWithPrefix);
+                int numBytes = len / 2;
+                uint8_t* bytes = (uint8_t*)malloc(numBytes * sizeof(uint8_t));
+
+                splitStringToBytes(opcodeWithPrefix, bytes, numBytes);
+                int i;
+                for (i=0;i<numBytes;i++)
+                {
+                    inputFileInMem[totalBytes] = bytes[i];
+                    totalBytes++;
+                }
+
+                free(bytes);
+                free(opcodeWithPrefix);
            }
         }
 
-        fclose(file);
+        fclose(inputFilePtr);
+
+        FILE* outputFilePtr = fopen(outputFile, "w");
+
+        if (outputFilePtr != NULL)
+        {
+            printf("Writing length [%d]\n", totalBytes);
+            fwrite(&totalBytes, sizeof(uint16_t), 1, outputFilePtr);
+            int i;
+            for (i=0;i<totalBytes;i++)
+            {
+                printf("Writing value [%x]\n", inputFileInMem[i]);
+                fwrite(&inputFileInMem[i], sizeof(uint8_t), 1, outputFilePtr);
+            }
+
+            fclose(outputFilePtr);
+        }
+        else
+        {
+            printf("No outputFilePtr!\n");
+        }
+
     }
     else
     {
-        printf("No file!\n");
+        printf("No inputFilePtr!\n");
     }
 
 
