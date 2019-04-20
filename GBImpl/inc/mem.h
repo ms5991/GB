@@ -3,9 +3,15 @@
 
 #include "components.h"
 
+void dumpMem(
+    mem_t* mem,
+    uint16_t upTo
+);
 
 void initMem(
-    mem_t* mem
+    mem_t* mem,
+    uint8_t* rom,
+    uint16_t romSize
 );
 
 uint8_t fetchEightBitMem(
@@ -13,7 +19,7 @@ uint8_t fetchEightBitMem(
     uint16_t addr
 );
 
-uint8_t setEightBitMem(
+void setEightBitMem(
     mem_t* mem,
     uint16_t addr,
     uint8_t value

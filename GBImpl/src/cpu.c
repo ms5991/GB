@@ -1,4 +1,5 @@
 #include "cpu.h"
+#include "mem.h"
 #include "opcodes.h"
 #include <stdio.h>
 
@@ -276,7 +277,15 @@ void executeOpcode(
     cpu_t* cpu, 
     mem_t* mem)
 {
-   normalOpcodes[opcode](cpu, mem);
+    if (opcode == 0xCB)
+    {
+        opcode = fetchEightBitMem(mem, readAndAdvancePC(cpu));
+        cbOpcodes[opcode](cpu, mem);
+    }
+    else
+    {
+        normalOpcodes[opcode](cpu, mem);
+    }
 }
 
 uint16_t readAndAdvancePC(
@@ -321,22 +330,20 @@ void setFlag(
 void printFlags(
     cpu_t* cpu)
 {
-    printf("Flags:\n");
-    printf("\tZ: %u\n",getFlag(cpu, flag_Z));
-    printf("\tN: %u\n",getFlag(cpu, flag_N));
-    printf("\tH: %u\n",getFlag(cpu, flag_H));
-    printf("\tC: %u\n",getFlag(cpu, flag_C));
+    printf("Z: %u\t",getFlag(cpu, flag_Z));
+    printf("N: %u\t",getFlag(cpu, flag_N));
+    printf("H: %u\t",getFlag(cpu, flag_H));
+    printf("C: %u\n",getFlag(cpu, flag_C));
 }
 void printRegs(
     cpu_t* cpu)
 {
-    printf("Registers:\n");
-    printf("\tA: %u\n",cpu->reg_A);
-    printf("\tF: %u\n",cpu->reg_F);
-    printf("\tB: %u\n",cpu->reg_B);
-    printf("\tC: %u\n",cpu->reg_C);
-    printf("\tD: %u\n",cpu->reg_D);
-    printf("\tE: %u\n",cpu->reg_E);
-    printf("\tH: %u\n",cpu->reg_H);
-    printf("\tL: %u\n",cpu->reg_L);
+    printf("A: %02x\t",cpu->reg_A);
+    printf("F: %02x\t",cpu->reg_F);
+    printf("B: %02x\t",cpu->reg_B);
+    printf("C: %02x\t",cpu->reg_C);
+    printf("D: %02x\t",cpu->reg_D);
+    printf("E: %02x\t",cpu->reg_E);
+    printf("H: %02x\t",cpu->reg_H);
+    printf("L: %02x\n",cpu->reg_L);
 }
